@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "mojicon/version"
+require "mojicon/converter"
 
-module Mojicon
+class String
+  include Mojicon::Converter
   class Error < StandardError; end
-  # Your code goes here...
 end
