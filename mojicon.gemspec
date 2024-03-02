@@ -9,11 +9,10 @@ Gem::Specification.new do |spec|
   spec.email = ["adverdest@gmail.com"]
 
   spec.summary = "Japanese converter"
-  spec.description =
-    """
-  Converts hiragana, katakana, and kanji.
-  It also performs conversion to upper and lower case letters and half-width and full-width characters.
-  """
+  spec.description = <<~DESC
+    Converts hiragana, katakana, and kanji.
+    It also performs conversion to upper and lower case letters and half-width and full-width characters.
+  DESC
   spec.homepage = "https://github.com/philosophynote/mojicon"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"

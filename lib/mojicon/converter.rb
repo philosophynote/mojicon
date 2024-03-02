@@ -114,7 +114,7 @@ module Mojicon
         trim_space.arabic_to_kanji,
         trim_space.arabic_to_kanji(zero: true),
         trim_space.kanji_to_arabic,
-        trim_space.kanji_to_arabic(conversion_zenkaku: true),
+        trim_space.kanji_to_arabic(conversion_zenkaku: true)
       ].uniq
     end
   end
