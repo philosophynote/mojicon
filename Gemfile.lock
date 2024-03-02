@@ -1,7 +1,10 @@
 PATH
   remote: .
   specs:
-    mojicon (0.1.0)
+    mojicon (0.2.0)
+      itaiji
+      ya_kansuji
+      zen_to_i
 
 GEM
   remote: https://rubygems.org/
