@@ -86,18 +86,26 @@ RSpec.describe Mojicon::Converter do
   end
 
   describe "upper_to_down" do
-    let(:upper) { "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }
+    let(:upper_alphabet) { "ABCDEFGHIJKLMNOPQRSTUVWXYZ" }
+    let(:upper_hirakana) { "あいうえおつやゆよ" }
+    let(:upper_katakana) { "アイウエオツヤユヨ" }
 
     it "ひらがなをカタカナに変換する" do
-      expect(upper.upper_to_down).to eq("abcdefghijklmnopqrstuvwxyz")
+      expect(upper_alphabet.upper_to_down).to eq("abcdefghijklmnopqrstuvwxyz")
+      expect(upper_hirakana.upper_to_down).to eq("ぁぃぅぇぉっゃゅょ")
+      expect(upper_katakana.upper_to_down).to eq("ァィゥェォッャュョ")
     end
   end
 
-  describe "down_to_up" do
-    let(:upper) { "abcdefghijklmnopqrstuvwxyz" }
+  describe "down_to_upper" do
+    let(:down_alphabet) { "abcdefghijklmnopqrstuvwxyz" }
+    let(:down_hirakana) { "ぁぃぅぇぉっゃゅょ" }
+    let(:down_katakana) { "ァィゥェォッャュョ" }
 
-    it "ひらがなをカタカナに変換する" do
-      expect(upper.down_to_upper).to eq("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    it "小文字を大文字に変換する" do
+      expect(down_alphabet.down_to_upper).to eq("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+      expect(down_hirakana.down_to_upper).to eq("あいうえおつやゆよ")
+      expect(down_katakana.down_to_upper).to eq("アイウエオツヤユヨ")
     end
   end
 

@@ -29,25 +29,29 @@ module Mojicon
     end
 
     def kana_to_hira
-      self&.tr("ァ-ヶ", "ぁ-ん")
+      return self if self.nil?
+
+      self.tr("ァ-ヶ", "ぁ-ん")
     end
 
     def hira_to_kana
-      self&.tr("ぁ-ん", "ァ-ヶ")
+      return self if self.nil?
+
+      self.tr("ぁ-ん", "ァ-ヶ")
     end
 
     def upper_to_down
-      return self if self&.nil?
+      return self if self.nil?
 
       downcased = downcase
-      downcased.tr("あいうえおつやゆよ", "ぁぃぅぇぉっゃゅょ")
+      downcased.tr("あいうえおつやゆよアイウエオツヤユヨ", "ぁぃぅぇぉっゃゅょァィゥェォッャュョ")
     end
 
     def down_to_upper
-      return self if self&.nil?
+      return self if self.nil?
 
       upcased = upcase
-      upcased.tr("ぁぃぅぇぉっゃゅょ", "あいうえおつやゆよ")
+      upcased.tr("ぁぃぅぇぉっゃゅょァィゥェォッャュョ", "あいうえおつやゆよアイウエオツヤユヨ")
     end
 
     def kanji_to_arabic(conversion_zenkaku: false)
