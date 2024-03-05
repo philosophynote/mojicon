@@ -7,11 +7,10 @@ module Mojicon
     using YaKansuji::CoreRefine
 
     def trim_space
-      self&.delete(" ")&.delete("　")
+      self.delete(" ")&.delete("　")
     end
 
     def zen_to_han
-      return self if self&.nil?
       return self unless match(/[^ -~｡-ﾟ]/)
 
       space_trimmed_word = tr("　", " ")
@@ -20,8 +19,6 @@ module Mojicon
     end
 
     def han_to_zen
-      return self if self&.nil?
-
       converted = tr("A-Za-z0-9", "Ａ-Ｚａ-ｚ０-９")
       space_converted = converted.tr(" ", "　")
       nkf_converted = NKF.nkf("-w -X", space_converted)
@@ -29,15 +26,13 @@ module Mojicon
     end
 
     def kana_to_hira
-      return self if self.nil?
-
-      self.tr("ァ-ヶ", "ぁ-ん")
+      vu = self.tr("ヴ","ゔ")
+      vu.tr("ァ-ヶ", "ぁ-ん")
     end
 
     def hira_to_kana
-      return self if self.nil?
-
-      self.tr("ぁ-ん", "ァ-ヶ")
+      vu = self.tr("ゔ","ヴ")
+      vu.tr("ぁ-ん", "ァ-ヶ")
     end
 
     def upper_to_down
@@ -54,18 +49,13 @@ module Mojicon
       upcased.tr("ぁぃぅぇぉっゃゅょァィゥェォッャュョ", "あいうえおつやゆよアイウエオツヤユヨ")
     end
 
-    def kanji_to_arabic(conversion_zenkaku: false)
+    def kanji_to_arabic
       kanji_pattern = /[一二三四五六七八九〇十百千万億兆]+/
       kanji_numbers = scan(kanji_pattern).map(&:to_i)
       replaced_str = gsub(kanji_pattern).with_index do |_match, index|
         kanji_numbers[index].to_s
       end
-
-      if conversion_zenkaku
-        replaced_str.han_to_zen
-      else
-        replaced_str
-      end
+      replaced_str.zen_to_han
     end
 
     def arabic_to_kanji(zero: true)
@@ -78,6 +68,7 @@ module Mojicon
           YaKansuji.to_kan(arabic_numbers[index], :simple)
         end
       end
+      arabic_numbers.han_to_zen
     end
 
     def to_new_moji
@@ -118,7 +109,7 @@ module Mojicon
         trim_space.arabic_to_kanji,
         trim_space.arabic_to_kanji(zero: true),
         trim_space.kanji_to_arabic,
-        trim_space.kanji_to_arabic(conversion_zenkaku: true)
+        trim_space.kanji_to_arabic
       ].uniq
     end
   end

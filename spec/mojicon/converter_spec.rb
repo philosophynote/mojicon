@@ -1,18 +1,11 @@
 RSpec.describe Mojicon::Converter do
   include Mojicon::Converter
-  describe ".trim_space(word)" do
+  describe ".trim_space" do
     it "半角全角スペースを削除した文字列を返却する" do
       word = "Hello World こんにちは　"
       expect(word.trim_space).to eq("HelloWorldこんにちは")
     end
   end
-
-  # 全角を半角に変換する
-  # Mojicon::Converterモジュールのメソッドとしてzen_to_han(word)を実装する
-  # wordが全角文字であることを確認して、全角を半角に変換した文字列を返却する
-  # wordはひらがな、カタカナ、アルファベット全て対応する
-  # 空白スペースや記号についても対応する
-  # wordに全角文字が含まれていない場合は、wordをそのまま返却する
 
   describe "zen_to_han" do
     let(:zenkaku_alhabet_up) { "ＡＢＣＤＥ" }
@@ -26,7 +19,6 @@ RSpec.describe Mojicon::Converter do
     let(:not_zenkaku) { "ｱAa1" }
     let(:single) { "’" }
     let(:double) { "”" }
-    let(:nil_word) { nil }
 
     it "半角に変換" do
       expect(zenkaku_kana1.zen_to_han).to eq("ｧｱｨｲｩｳｪｴｫｵｶｶﾞｷｷﾞｸｸﾞｹｹﾞｺｺﾞｻｻﾞｼｼﾞｽｽﾞｾｾﾞｿｿﾞﾀﾀﾞﾁﾁﾞｯﾂﾂﾞﾃﾃﾞﾄﾄﾞﾅﾆﾇﾈﾉ")
@@ -70,18 +62,30 @@ RSpec.describe Mojicon::Converter do
   end
 
   describe "kana_to_hira" do
-    let(:kana) { "ア" }
+    let(:kana1) do 
+      "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノ"
+    end
+    let(:kana2) do  
+      "ハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴ"
+    end
 
     it "カタカナをひらがなに変換する" do
-      expect(kana.kana_to_hira).to eq("あ")
+      expect(kana1.kana_to_hira).to eq("ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねの")
+      expect(kana2.kana_to_hira).to eq("はばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔ")
     end
   end
 
   describe "hira_to_kana" do
-    let(:kana) { "あ" }
+    let(:hira1) do 
+      "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねの"
+    end
+    let(:hira2) do 
+      "はばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔ"
+    end
 
     it "ひらがなをカタカナに変換する" do
-      expect(kana.hira_to_kana).to eq("ア")
+      expect(hira1.hira_to_kana).to eq("ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノ")
+      expect(hira2.hira_to_kana).to eq("ハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴ")
     end
   end
 
@@ -113,35 +117,30 @@ RSpec.describe Mojicon::Converter do
     let(:kanji) { "一〇二四" }
     let(:address) { "東京都港区東麻布三丁目二六番一〇－三〇一号" }
     let(:date) { "平成二十四年八月三十一日" }
-    let(:capital) { "三三三億三三三三万三三三三" }
+    let(:capital) { "三三三億三三三三万三三三三円" }
 
     context "半角数字" do
       it "漢数字をアラビア数字に変換する" do
         expect(kanji.kanji_to_arabic).to eq("1024")
-        expect(address.kanji_to_arabic).to eq("東京都港区東麻布3丁目26番10－301号")
-        expect(capital.kanji_to_arabic).to eq("33333333333")
-      end
-    end
-
-    context "全角数字" do
-      it "漢数字をアラビア数字に変換する" do
-        expect(date.kanji_to_arabic(conversion_zenkaku: true)).to eq("平成２４年８月３１日")
+        expect(address.kanji_to_arabic).to eq("東京都港区東麻布3丁目26番10-301号")
+        expect(date.kanji_to_arabic).to eq("平成24年8月31日")
+        expect(capital.kanji_to_arabic).to eq("33333333333円")
       end
     end
   end
 
   describe "arabic_to_kanji" do
     let(:arabic_str) { "1024" }
-    let(:arabic_address) { "東京都港区東麻布3丁目26番10－301号" }
+    let(:arabic_address) { "東京都港区東麻布3丁目26番10-301号" }
     let(:date) { "平成２４年８月３１日" }
-    let(:capital) { "33333333333" }
+    let(:capital) { "33333333333円" }
 
     context "〇あり" do
       it "アラビア数字を漢数字に変換する" do
         expect(arabic_str.arabic_to_kanji).to eq("一〇二四")
         expect(arabic_address.arabic_to_kanji).to eq("東京都港区東麻布三丁目二六番一〇－三〇一号")
         expect(date.arabic_to_kanji).to eq("平成二四年八月三一日")
-        expect(capital.arabic_to_kanji).to eq("三三三億三三三三万三三三三")
+        expect(capital.arabic_to_kanji).to eq("三三三億三三三三万三三三三円")
       end
     end
 
@@ -150,16 +149,18 @@ RSpec.describe Mojicon::Converter do
         expect(arabic_str.arabic_to_kanji(zero: false)).to eq("千二十四")
         expect(arabic_address.arabic_to_kanji(zero: false)).to eq("東京都港区東麻布三丁目二十六番十－三百一号")
         expect(date.arabic_to_kanji(zero: false)).to eq("平成二十四年八月三十一日")
-        expect(capital.arabic_to_kanji(zero: false)).to eq("三百三十三億三千三百三十三万三千三百三十三")
+        expect(capital.arabic_to_kanji(zero: false)).to eq("三百三十三億三千三百三十三万三千三百三十三円")
       end
     end
   end
 
   describe "to_new_moji" do
     let(:takahashi) { "髙橋" }
+    let(:yamazaki) { "山﨑" }
 
     it "新字体に変換する" do
       expect(takahashi.to_new_moji).to eq("高橋")
+      expect(yamazaki.to_new_moji).to eq("山崎")
     end
   end
 
@@ -170,7 +171,7 @@ RSpec.describe Mojicon::Converter do
     let(:saitou_old) { "齊藤" }
     let(:saitou_new) { "斉藤" }
     let(:kanji_address) { "東京都港区東麻布三丁目二六番一〇－三〇一号" }
-    let(:arabic_address) { "東京都港区東麻布3丁目26番10－301号" }
+    let(:arabic_address) { "東京都港区東麻布3丁目26番10-301号" }
 
     it "同じ内容と判定した場合はtrueを返却する" do
       expect(word.equal?(word2)).to be_truthy
