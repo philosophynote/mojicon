@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "itaiji"
   spec.add_dependency "ya_kansuji"
   spec.add_dependency "zen_to_i"
+  spec.add_dependency "nkf"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
