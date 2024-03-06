@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mojicon (0.2.0)
+    mojicon (0.3.0)
       itaiji
       nkf
       ya_kansuji
