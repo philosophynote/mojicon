@@ -7,7 +7,7 @@ module Mojicon
     using YaKansuji::CoreRefine
 
     def trim_space
-      self.delete(" ")&.delete("　")
+      delete(" ")&.delete("　")
     end
 
     def zen_to_han
@@ -26,22 +26,22 @@ module Mojicon
     end
 
     def kana_to_hira
-      vu = self.tr("ヴ","ゔ")
+      vu = tr("ヴ", "ゔ")
       vu.tr("ァ-ヶ", "ぁ-ん")
     end
 
     def hira_to_kana
-      vu = self.tr("ゔ","ヴ")
+      vu = tr("ゔ", "ヴ")
       vu.tr("ぁ-ん", "ァ-ヶ")
     end
 
     def upper_to_down
-      downcased = self.downcase
+      downcased = downcase
       downcased.tr("あいうえおつやゆよアイウエオツヤユヨｱｲｳｴｵﾂﾔﾕﾖ", "ぁぃぅぇぉっゃゅょァィゥェォッャュョｧｨｩｪｫｯｬｭｮ")
     end
 
     def down_to_upper
-      upcased = self.upcase
+      upcased = upcase
       upcased.tr("ぁぃぅぇぉっゃゅょァィゥェォッャュョｧｨｩｪｫｯｬｭｮ", "あいうえおつやゆよアイウエオツヤユヨｱｲｳｴｵﾂﾔﾕﾖ")
     end
 
@@ -91,12 +91,12 @@ module Mojicon
         trim_space.kanji_to_arabic,
         trim_space.arabic_to_kanji,
         trim_space.arabic_to_kanji(zero: false),
-        trim_space.to_new_moji, 
+        trim_space.to_new_moji,
         trim_space.hira_to_kana.zen_to_han,
         trim_space.kanji_to_arabic.han_to_zen,
         trim_space.arabic_to_kanji.zen_to_han,
         trim_space.arabic_to_kanji(zero: false).zen_to_han,
-        trim_space.han_to_zen.kana_to_hira,
+        trim_space.han_to_zen.kana_to_hira
       ].uniq
     end
   end

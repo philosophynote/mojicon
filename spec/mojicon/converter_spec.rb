@@ -62,10 +62,10 @@ RSpec.describe Mojicon::Converter do
   end
 
   describe "kana_to_hira" do
-    let(:kana1) do 
+    let(:kana1) do
       "ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノ"
     end
-    let(:kana2) do  
+    let(:kana2) do
       "ハバパヒビピフブプヘベペホボポマミムメモャヤュユョヨラリルレロヮワヰヱヲンヴ"
     end
 
@@ -76,10 +76,10 @@ RSpec.describe Mojicon::Converter do
   end
 
   describe "hira_to_kana" do
-    let(:hira1) do 
+    let(:hira1) do
       "ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねの"
     end
-    let(:hira2) do 
+    let(:hira2) do
       "はばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをんゔ"
     end
 

@@ -38,9 +38,9 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   spec.add_development_dependency "factory_bot"
   spec.add_dependency "itaiji"
+  spec.add_dependency "nkf"
   spec.add_dependency "ya_kansuji"
   spec.add_dependency "zen_to_i"
-  spec.add_dependency "nkf"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
