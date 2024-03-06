@@ -165,25 +165,48 @@ RSpec.describe Mojicon::Converter do
   end
 
   describe "equal?" do
-    let(:word) { "ｱｲｳｴｵ" }
-    let(:word2) { "アイウエオ" }
-    let(:word3) { "あいうえお" }
-    let(:saitou_old) { "齊藤" }
-    let(:saitou_new) { "斉藤" }
+    let(:half_word) { "ｵｵﾀﾆｼｮｳﾍｲ" }
+    let(:word_space) { "ｵｵﾀﾆｼｮｳﾍｲ " }
+    let(:full_word) { "オオタニショウヘイ" }
+    let(:hiragana) { "おおたにしょうへい" }
+    let(:lower_word) { "ｫｫﾀﾆｼｮｩﾍｨ" }
+    let(:upper_word) { "ｵｵﾀﾆｼﾖｳﾍｲ" }
+    let(:itaiji) { "齊藤" }
+    let(:shinji) { "斉藤" }
     let(:kanji_address) { "東京都港区東麻布三丁目二六番一〇－三〇一号" }
     let(:arabic_address) { "東京都港区東麻布3丁目26番10-301号" }
+    let(:arabic_full_address) { "東京都港区東麻布３丁目２６番１０－３０１号" }
 
     it "同じ内容と判定した場合はtrueを返却する" do
-      expect(word.equal?(word2)).to be_truthy
-      expect(word2.equal?(word3)).to be_truthy
-      expect(word3.equal?(word)).to be_truthy
-      expect(saitou_old.equal?(saitou_new)).to be_truthy
+      # 同じ文字
+      expect(half_word.equal?(half_word)).to be_truthy
+      # 空白
+      expect(half_word.equal?(word_space)).to be_truthy
+      expect(word_space.equal?(half_word)).to be_truthy
+      # 半角と全角
+      expect(half_word.equal?(full_word)).to be_truthy
+      expect(full_word.equal?(half_word)).to be_truthy
+      # かなとカナ
+      expect(full_word.equal?(hiragana)).to be_truthy
+      expect(hiragana.equal?(full_word)).to be_truthy
+      # 大文字と小文字
+      expect(lower_word.equal?(upper_word)).to be_truthy
+      expect(upper_word.equal?(lower_word)).to be_truthy
+      # 異体字と新字
+      expect(itaiji.equal?(shinji)).to be_truthy
+      # 漢数字とアラビア数字
       expect(kanji_address.equal?(arabic_address)).to be_truthy
       expect(arabic_address.equal?(kanji_address)).to be_truthy
+      # 半角カナと全角かな
+      expect(half_word.equal?(hiragana)).to be_truthy
+      expect(hiragana.equal?(half_word)).to be_truthy
+      # 漢数字とアラビア数字(全角)
+      expect(kanji_address.equal?(arabic_full_address)).to be_truthy
+      expect(arabic_full_address.equal?(kanji_address)).to be_truthy
     end
 
     it "異なる内容と判定した場合はfalseを返却する" do
-      expect(saitou_new.equal?(saitou_old)).to be_falsey
+      expect(shinji.equal?(itaiji)).to be_falsey
     end
   end
 end

@@ -22,7 +22,7 @@ module Mojicon
       converted = tr("A-Za-z0-9", "Ａ-Ｚａ-ｚ０-９")
       space_converted = converted.tr(" ", "　")
       nkf_converted = NKF.nkf("-w -X", space_converted)
-      nkf_converted.tr("\s!#$%&\'\"()⦅⦆⟨⟩*+,-./:;<=>?@[]^_`{|}~\\", "　！＃＄％＆＇＂（）｟｠〈〉＊＋，－．／：；＜＝＞？＠［］＾＿｀｛｜｝～＼")
+      nkf_converted.tr("\s!#$%&\'\"()⦅⦆⟨⟩*+,-./:;<=>?@[]^_`−{|}~\\", "　！＃＄％＆＇＂（）｟｠〈〉＊＋，－．／：；＜＝＞？＠［］＾＿｀－｛｜｝～＼")
     end
 
     def kana_to_hira
@@ -36,17 +36,13 @@ module Mojicon
     end
 
     def upper_to_down
-      return self if self.nil?
-
-      downcased = downcase
-      downcased.tr("あいうえおつやゆよアイウエオツヤユヨ", "ぁぃぅぇぉっゃゅょァィゥェォッャュョ")
+      downcased = self.downcase
+      downcased.tr("あいうえおつやゆよアイウエオツヤユヨｱｲｳｴｵﾂﾔﾕﾖ", "ぁぃぅぇぉっゃゅょァィゥェォッャュョｧｨｩｪｫｯｬｭｮ")
     end
 
     def down_to_upper
-      return self if self.nil?
-
-      upcased = upcase
-      upcased.tr("ぁぃぅぇぉっゃゅょァィゥェォッャュョ", "あいうえおつやゆよアイウエオツヤユヨ")
+      upcased = self.upcase
+      upcased.tr("ぁぃぅぇぉっゃゅょァィゥェォッャュョｧｨｩｪｫｯｬｭｮ", "あいうえおつやゆよアイウエオツヤユヨｱｲｳｴｵﾂﾔﾕﾖ")
     end
 
     def kanji_to_arabic
@@ -76,9 +72,11 @@ module Mojicon
     end
 
     def equal?(other)
-      return false if nil?
+      return false if other.nil?
+      return false unless other.is_a?(String)
+      return true if self == other
 
-      candidate.include?(other)
+      candidate.include?(other.trim_space)
     end
 
     def candidate
@@ -90,26 +88,15 @@ module Mojicon
         trim_space.hira_to_kana,
         trim_space.upper_to_down,
         trim_space.down_to_upper,
-        trim_space.zen_to_han.hira_to_kana,
-        trim_space.han_to_zen.kana_to_hira,
-        trim_space.han_to_zen.hira_to_kana,
-        trim_space.kana_to_hira.zen_to_han,
-        trim_space.kana_to_hira.han_to_zen,
-        trim_space.hira_to_kana.zen_to_han,
-        trim_space.hira_to_kana.han_to_zen,
-        trim_space.upper_to_down.zen_to_han,
-        trim_space.upper_to_down.han_to_zen,
-        trim_space.upper_to_down.kana_to_hira,
-        trim_space.upper_to_down.hira_to_kana,
-        trim_space.down_to_upper.zen_to_han,
-        trim_space.down_to_upper.han_to_zen,
-        trim_space.down_to_upper.kana_to_hira,
-        trim_space.down_to_upper.hira_to_kana,
-        trim_space.to_new_moji,
-        trim_space.arabic_to_kanji,
-        trim_space.arabic_to_kanji(zero: true),
         trim_space.kanji_to_arabic,
-        trim_space.kanji_to_arabic
+        trim_space.arabic_to_kanji,
+        trim_space.arabic_to_kanji(zero: false),
+        trim_space.to_new_moji, 
+        trim_space.hira_to_kana.zen_to_han,
+        trim_space.kanji_to_arabic.han_to_zen,
+        trim_space.arabic_to_kanji.zen_to_han,
+        trim_space.arabic_to_kanji(zero: false).zen_to_han,
+        trim_space.han_to_zen.kana_to_hira,
       ].uniq
     end
   end
