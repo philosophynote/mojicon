@@ -13,5 +13,6 @@ gem "rubocop", "~> 1.21"
 
 gem "factory_bot"
 gem "itaiji"
+gem "nkf"
 gem "ya_kansuji"
 gem "zen_to_i"
