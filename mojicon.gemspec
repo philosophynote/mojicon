@@ -10,10 +10,10 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Japanese converter"
   spec.description = <<~DESC
-    Provides a wide range of text transformation functionalities, 
+    Provides a wide range of text transformation functionalities,
     including conversions between full-width and half-width characters,
-    kana and hiragana, kanji numerals to Arabic numerals, 
-    Arabic numerals to kanji, and more. 
+    kana and hiragana, kanji numerals to Arabic numerals,
+    Arabic numerals to kanji, and more.
   DESC
   spec.homepage = "https://github.com/philosophynote/mojicon"
   spec.license = "MIT"
