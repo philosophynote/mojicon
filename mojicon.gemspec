@@ -10,8 +10,10 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Japanese converter"
   spec.description = <<~DESC
-    Converts hiragana, katakana, and kanji.
-    It also performs conversion to upper and lower case letters and half-width and full-width characters.
+    Provides a wide range of text transformation functionalities,
+    including conversions between full-width and half-width characters,
+    kana and hiragana, kanji numerals to Arabic numerals,
+    Arabic numerals to kanji, and more.
   DESC
   spec.homepage = "https://github.com/philosophynote/mojicon"
   spec.license = "MIT"
